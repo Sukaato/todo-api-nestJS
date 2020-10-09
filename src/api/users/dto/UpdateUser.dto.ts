@@ -16,5 +16,5 @@ export class UpdateUserDTO extends UpdateUserCredentialDTO {
     @IsArray()
     @ArrayMinSize(0)
     @ArrayMaxSize(10)
-    readonly todo_ids: string[];
+    readonly todo_ids: number[];
 }

@@ -1,19 +1,20 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { UtilsModule } from 'src/common/utils/utils.module';
-import { Todo, TodoSchemas } from '../todos/schema/todos.schemas';
-import { TodosService } from '../todos/todos.service';
-import { User, UserSchemas } from './schema/user.schemas';
+import { IpEntity } from '../../entities/ip.entity';
+import { RoleEntity } from '../../entities/role.entity';
+import { TodoEntity } from '../../entities/todo.entity';
+import { UserEntity } from '../../entities/user.entity';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 
 @Module({
   imports: [ 
-    MongooseModule.forFeature([ {name: User.name, schema: UserSchemas}, {name: Todo.name, schema: TodoSchemas} ]),
+    TypeOrmModule.forFeature([UserEntity, IpEntity, RoleEntity, TodoEntity]),
     UtilsModule
   ],
   controllers: [ UsersController ],
-  providers: [ UsersService, TodosService ],
-  exports: [ UsersService ]
+  providers: [ UsersService ],
+  exports: [ UsersService, TypeOrmModule ]
 })
 export class UsersModule {}

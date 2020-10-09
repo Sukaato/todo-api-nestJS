@@ -5,5 +5,5 @@ export class UpdateUserCredentialDTO extends CreateUserDTO {
 
     @IsString()
     @IsNotEmpty()
-    readonly id: string;
+    readonly id: number;
 }

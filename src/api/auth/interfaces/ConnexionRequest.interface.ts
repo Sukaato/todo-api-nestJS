@@ -1,7 +1,7 @@
 import { Request } from 'express';
-import { User } from 'src/api/users/schema/user.schemas';
+import { UserEntity } from '../../../entities/user.entity';
  
 export interface ConnexionRequest extends Request {
-  user: User;
+  user: UserEntity;
   ip: string;
 }

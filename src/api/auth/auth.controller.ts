@@ -1,4 +1,4 @@
-import { Body, Controller, Ip, NotFoundException, Post, Request, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Ip, Logger, NotFoundException, Post, Request, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/common/guards/local-auth.guard';
@@ -19,7 +19,8 @@ export class AuthController {
     @UseGuards(LocalAuthGuard)
     async login(@Request() req: ConnexionRequest, @Res() res: Response) {
         const { user, ip } = req;
-        if (!user.ips.includes(ip)) {
+        Logger.log(user)
+        if (!user.ips.find(i => i.ip === ip)) {
             throw new NotFoundException('Address IP not valid');
         }
         const jwtCookie = this.authService.generateJwtToken(user);

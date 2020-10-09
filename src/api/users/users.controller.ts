@@ -1,18 +1,13 @@
-import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Put, UseGuards } from '@nestjs/common';
-import { Roles } from 'src/common/decorators/roles.decorator';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guard';
-import { CreateTodoDTO } from '../todos/dto/CreateTodo.dto';
-import { UpdateTodoDTO } from '../todos/dto/UpdateTodo.dto';
-import { TodosService } from '../todos/todos.service';
 import { UpdateUserCredentialDTO } from './dto/UpdateUserCredencial.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
-@UseGuards(JwtAuthGuard, RolesGuard)
+// @UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
-    constructor(private usersService: UsersService,
-                private todosService: TodosService) {}
+    constructor(private usersService: UsersService) {}
 
     @Get()
     async findAll() {
@@ -20,12 +15,12 @@ export class UsersController {
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: string) {
+    async findOne(@Param('id') id: number) {
         return await this.usersService.findOneById(id);
     }
 
     @Patch(':id/credential')
-    async updateCredential(@Body() user: UpdateUserCredentialDTO, @Param('id') id: string) {
+    async updateCredential(@Body() user: UpdateUserCredentialDTO, @Param('id') id: number) {
         if (!user) {
             throw new BadRequestException("User can't be null");
         }
@@ -37,13 +32,13 @@ export class UsersController {
     }
 
     @Delete(':id')
-    async delete(@Param('id') id: string) {
+    async delete(@Param('id') id: number) {
         return await this.usersService.delete(id);
     }
 
 
     /* Todos */
-
+/* 
     @Roles('user')
     @Post(':id/todos')
     async createTodo(@Body() todo: CreateTodoDTO, @Param('id') id: string) {
@@ -79,5 +74,5 @@ export class UsersController {
     async deleteTodo(@Param('id') user_id: string, @Param('todo_id') todo_id: string) {
         return await this.todosService.delete(user_id, todo_id);
     }
-
+ */
 }

@@ -4,8 +4,8 @@ import { MongoError } from '../mongoError.dto';
 @Injectable()
 export class UtilsService {
 
-    handleError(err: any) {
+    handleError<T = any>(err: T): T {
         Logger.error(err);
-        return err as MongoError;
+        return err;
     }
 }

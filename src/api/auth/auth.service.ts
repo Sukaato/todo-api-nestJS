@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcrypt';
 import { UsersService } from 'src/api/users/users.service';
 import { CreateUserDTO } from '../users/dto/CreateUser.dto';
-import { User } from '../users/schema/user.schemas';
+import { UserEntity } from '../../entities/user.entity';
 import { CredentialDTO } from './dto/credential.dto';
 
 @Injectable()
@@ -30,14 +30,12 @@ export class AuthService {
         if (!passwordMatch) {
             throw new NotFoundException('Wrong credentials provided');
         }
-
-        const { id, username, ips, roles } = user;
-        return { id, username, ips, roles };
+        return user;
     }
 
     async disconnect() {}
 
-    public generateJwtToken(user: User) {
+    public generateJwtToken(user: UserEntity) {
         Logger.log(user);
         const payload = { ...user };
         const token = this.jwtService.sign(payload);

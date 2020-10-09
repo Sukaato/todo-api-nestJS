@@ -5,7 +5,7 @@ export class UpdateTodoDTO extends CreateTodoDTO {
 
     @IsString()
     @IsNotEmpty()
-    readonly id: string;
+    readonly id: number;
 
     @IsString()
     @IsNotEmpty()
